@@ -23,7 +23,7 @@ bool ExpressionManager::isBalancedParentheses(const std::string& expression) {
         else if (c == ')' || c == '}' || c == ']') {
             if (stack.empty() || (c == ')' && stack.top() != '(') ||
                 (c == '}' && stack.top() != '{') || (c == ']' && stack.top() != '[')) {
-                return false; // unbalanced parentheses
+                return false; //unbalanced parentheses
             }
             stack.pop();
         }
@@ -38,37 +38,37 @@ std::string ExpressionManager::infixToPostfix(const std::string& infix) {
 
     for (char c : infix) {
         if (isalnum(c)) {
-            postfix += c; // operand, add to postfix
+            postfix += c; //operand, add to postfix
         }
         else if (c == '(' || c == '{' || c == '[') {
-            operatorStack.push(c); // opening parenthesis, push to stack
+            operatorStack.push(c); //opening parenthesis, push to stack
         }
         else if (c == ')' || c == '}' || c == ']') {
             while (!operatorStack.empty() && operatorStack.top() != '(' &&
                 operatorStack.top() != '{' && operatorStack.top() != '[') {
-                postfix += operatorStack.top(); // pop operators until matching opening parenthesis
+                postfix += operatorStack.top(); //pop operators until matching opening parenthesis
                 operatorStack.pop();
             }
             if (operatorStack.empty() || (c == ')' && operatorStack.top() != '(') ||
                 (c == '}' && operatorStack.top() != '{') || (c == ']' && operatorStack.top() != '[')) {
-                return "Invalid Expression"; // unbalanced parentheses
+                return "Invalid Expression"; //unbalanced parentheses
             }
-            operatorStack.pop(); // pop the matching opening parenthesis
+            operatorStack.pop(); //pop the matching opening parenthesis
         }
         else if (isOperator(c)) {
             while (!operatorStack.empty() && isOperator(operatorStack.top()) &&
                 getPrecedence(operatorStack.top()) >= getPrecedence(c)) {
-                postfix += operatorStack.top(); // pop higher or equal precedence operators
+                postfix += operatorStack.top(); //pop higher or equal precedence operators
                 operatorStack.pop();
             }
-            operatorStack.push(c); // push current operator to stack
+            operatorStack.push(c); //push current operator to stack
         }
     }
 
-    // pop any remaining operators from the stack
+    //pop any remaining operators from the stack
     while (!operatorStack.empty()) {
         if (operatorStack.top() == '(' || operatorStack.top() == '{' || operatorStack.top() == '[') {
-            return "Invalid Expression"; // unbalanced parentheses
+            return "Invalid Expression"; //unbalanced parentheses
         }
         postfix += operatorStack.top();
         operatorStack.pop();
